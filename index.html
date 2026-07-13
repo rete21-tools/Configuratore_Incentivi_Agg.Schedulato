@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tool Incentivi Percorsi — Rete 21 — v11 — 12/07/2026</title>
+<title>Tool Incentivi Percorsi — Rete 21 — v12 — 13/07/2026</title>
 <meta name="description" content="Trova gli incentivi per la transizione energetica adatti alla tua situazione: scegli il tuo percorso tra privato, impresa, PA, CER, agrivoltaico, condominio. A cura di Rete 21.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -84,6 +84,34 @@
   .page-hero h1 em { color: var(--r21-green); font-style: normal; font-weight: 800; }
   .hero-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
   .hero-badge { background: rgba(181,187,0,0.15); color: var(--r21-green); border: 1px solid rgba(181,187,0,0.45); padding: 7px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; letter-spacing: 0.3px; }
+
+  /* =========================================================
+     EVIDENZA AGGIORNAMENTO AUTOMATICO
+     ========================================================= */
+  .hero-badge-live { background: rgba(255,255,255,0.12); color: #fff; border-color: rgba(255,255,255,0.35); }
+  .update-box { border: 1px solid #e2e5e8; border-left: 4px solid var(--r21-green); border-radius: 6px; background: #fbfcfa; margin-bottom: 28px; overflow: hidden; }
+  .update-box.has-news { border-left-color: #e8a33d; background: #fffaf2; }
+  .update-head { display: flex; align-items: center; gap: 12px; padding: 14px 18px; }
+  .update-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--r21-green); flex-shrink: 0; box-shadow: 0 0 0 3px rgba(181,187,0,0.22); }
+  .update-box.has-news .update-dot { background: #e8a33d; box-shadow: 0 0 0 3px rgba(232,163,61,0.22); }
+  .update-titles { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+  .update-titles strong { font-size: 14px; color: var(--r21-dark-2); font-weight: 700; }
+  .update-sub { font-size: 12.5px; color: #6b7280; }
+  .update-toggle { background: #fff; border: 1px solid #d7dbdf; border-radius: 4px; padding: 6px 12px; font-family: inherit; font-size: 12px; font-weight: 600; color: var(--r21-dark-2); cursor: pointer; white-space: nowrap; }
+  .update-toggle:hover { border-color: var(--r21-green); color: var(--r21-green-dark); }
+  .update-body { padding: 4px 18px 16px; border-top: 1px solid #edf0f2; font-size: 13.5px; line-height: 1.6; color: #3f4650; }
+  .update-body h1, .update-body h2, .update-body h3 { font-size: 14px; font-weight: 700; color: var(--r21-dark-2); margin: 14px 0 6px; }
+  .update-body p { margin: 8px 0; }
+  .update-body ul { margin: 8px 0 8px 20px; }
+  .update-body li { margin: 3px 0; }
+  .update-body a { color: var(--r21-green-dark); text-decoration: underline; }
+  .update-body table { border-collapse: collapse; width: 100%; margin: 10px 0; font-size: 12.5px; }
+  .update-body th, .update-body td { border: 1px solid #e2e5e8; padding: 6px 9px; text-align: left; }
+  .update-body th { background: #f3f5f6; font-weight: 700; }
+  .update-body hr { border: 0; border-top: 1px solid #e8ebed; margin: 12px 0; }
+  .update-foot { padding: 9px 18px; background: #f3f5f6; border-top: 1px solid #edf0f2; font-size: 11.5px; color: #6b7280; }
+  .update-foot a { color: var(--r21-green-dark); font-weight: 600; margin-left: 6px; }
+  @media (max-width: 600px) { .update-head { flex-wrap: wrap; } .update-toggle { width: 100%; } }
 
   /* LAYOUT */
   .main-wrap { max-width: 1760px; margin: -32px auto 0; padding: 0 24px 60px; position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 320px; gap: 32px; }
@@ -541,6 +569,7 @@
       <span class="hero-badge">Per percorso</span>
       <span class="hero-badge">Con scadenze</span>
       <span class="hero-badge">Aggiornato 12 luglio 2026</span><span class="hero-badge">Veneto · Emilia-Romagna · Calabria</span>
+      <span class="hero-badge hero-badge-live" id="badge-verifica" hidden></span>
     </div>
   </div>
 </section>
@@ -548,6 +577,24 @@
 <!-- MAIN + SIDEBAR -->
 <div class="main-wrap">
 <main class="content">
+
+<!-- EVIDENZA AGGIORNAMENTO AUTOMATICO -->
+<div class="update-box" id="update-box" hidden>
+  <div class="update-head" id="update-head">
+    <span class="update-dot" id="update-dot"></span>
+    <div class="update-titles">
+      <strong id="update-title">Verifica normativa automatica</strong>
+      <span class="update-sub" id="update-sub"></span>
+    </div>
+    <button class="update-toggle" type="button" id="update-toggle" aria-expanded="false">Mostra dettagli ▾</button>
+  </div>
+  <div class="update-body" id="update-body" hidden></div>
+  <div class="update-foot">
+    Controllo giornaliero automatico su fonti ufficiali (GSE, MASE, Gazzetta Ufficiale, ENEA, ARERA).
+    <a href="https://github.com/rete21-tools/tool-incentivi-ti/commits/main/update.json" target="_blank" rel="noopener">Storico verifiche</a>
+  </div>
+</div>
+
 
   <h2 class="section-title">Trova gli incentivi <em>giusti per te</em></h2>
 
@@ -903,19 +950,19 @@
                   <td class="name">CCIAA Treviso-Belluno — Bando doppia transizione</td>
                   <td class="desc">Bando camerale a sostegno della <strong>doppia transizione digitale ed ecologica</strong> delle MPMI (digitalizzazione + efficienza energetica, monitoraggio consumi, riduzione emissioni). Contributo a fondo perduto <strong>50%</strong>, max <strong>40.000 € per impresa</strong> (fino a 30.000 € beni/software + 5.000 € consulenze 4.0 + 5.000 € consulenze/formazione efficienza energetica). Ammesse anche spese dal 01/01/2026. Sede o unità operativa nella circoscrizione Treviso-Belluno</td>
                   <td class="beneficiari"><span class="ben-badge ben-imprese">MPMI TV-BL</span></td>
-                  <td class="scadenza"><span class="scad-badge scad-breve">Apre 08/07/2026</span><span class="scad-note">Nuova finestra: domande 08/07/2026 → 23/10/2026</span></td>
-                  <td class="stato"><span class="stato-badge stato-nuovo">Nuova edizione</span><span class="stato-note">Bando 2026 riaperto: domande dalle 09:00 del 08/07/2026 fino al 23/10/2026 (a sportello)</span></td>
+                  <td class="scadenza"><span class="scad-badge scad-breve">23/10/2026</span><span class="scad-note">Sportello <strong>APERTO</strong> dal 08/07/2026; domande fino al 23/10/2026 (ore 23:59), salvo chiusura anticipata per esaurimento fondi</span></td>
+                  <td class="stato"><span class="stato-badge stato-attivo">Aperto</span><span class="stato-note">Bando 2026 <strong>aperto dalle 09:00 dell'08/07/2026</strong>: domande fino al 23/10/2026, ordine cronologico. Dotazione 1.400.000 €</span></td>
                   <td class="compat">Contributo camerale cumulabile con incentivi nazionali su spese distinte, nei limiti del de minimis.</td>
-                  <td class="azioni"><strong>APRE 08/07/2026</strong> (domande fino al 23/10/2026, a sportello). Presentare su piattaforma telematica <strong>tb.camcom.gov.it</strong>; ammesse spese dal 01/01/2026.</td>
+                  <td class="azioni"><strong>SPORTELLO APERTO</strong> — presentare al più presto (ordine cronologico, dotazione 1,4 M€). Piattaforma <strong>Restart</strong> / <strong>tb.camcom.gov.it</strong>; ammesse spese dal 01/01/2026. Chiusura 23/10/2026.</td>
                 </tr>
                 <tr>
                   <td class="name">CCIAA Venezia Rovigo — Voucher doppia transizione</td>
-                  <td class="desc">Nuovo <strong>Voucher Doppia Transizione</strong> della CCIAA Venezia Rovigo per innovazione tecnologica, formazione, consulenza ed <strong>efficienza energetica</strong> delle MPMI. Contributo a fondo perduto <strong>fino al 70%</strong> delle spese ammissibili. Sede o unità operativa nella circoscrizione Venezia-Rovigo</td>
+                  <td class="desc"><strong>Voucher Doppia Transizione 2026</strong> (cod. bando 2601) della CCIAA Venezia Rovigo: tecnologie digitali e soluzioni per la <strong>sostenibilità energetica</strong> (monitoraggio consumi, LCA, rating ESG), consulenze <strong>Energy Manager</strong> e <strong>studi di fattibilità per CER</strong>, formazione. Fondo perduto <strong>70%</strong> delle spese, max <strong>6.000 €</strong> per impresa (investimento minimo 5.000 €; premialità +250 € per rating di legalità o certificazione parità di genere). Dotazione <strong>476.000 €</strong>. De minimis. Sede o unità operativa nella circoscrizione Venezia-Rovigo</td>
                   <td class="beneficiari"><span class="ben-badge ben-imprese">MPMI VE-RO</span></td>
-                  <td class="scadenza"><span class="scad-badge scad-att">In pubblicazione</span><span class="scad-note">Bando in preparazione — verificare apertura sul portale camerale</span></td>
-                  <td class="stato"><span class="stato-badge stato-att">Da verificare</span><span class="stato-note">Annunciato nuovo voucher fino al 70%. Monitorare il portale CCIAA Venezia Rovigo per date e dotazione</span></td>
+                  <td class="scadenza"><span class="scad-badge scad-breve">Apre 27/07/2026</span><span class="scad-note"><strong>Click day</strong>: invio domande dalle ore 10:00 del 27/07/2026, a sportello (ordine cronologico). Precaricamento della pratica già possibile dall'08/07/2026 su piattaforma Restart</span></td>
+                  <td class="stato"><span class="stato-badge stato-nuovo">Nuovo — in apertura</span><span class="stato-note">Bando <strong>pubblicato</strong>: confermati dotazione 476.000 €, voucher 70% fino a 6.000 € e click day del 27/07/2026</span></td>
                   <td class="compat">Contributo camerale cumulabile con incentivi nazionali su spese distinte, nei limiti del de minimis.</td>
-                  <td class="azioni">Monitorare il portale <strong>CCIAA Venezia Rovigo</strong> per l'apertura; predisporre preventivi e progetto di efficienza energetica.</td>
+                  <td class="azioni"><strong>PRECARICARE ORA la domanda su Restart</strong> (già aperto): il 27/07 è un click day a ordine cronologico. Preparare preventivi, profilo digitale/green e — se pertinente — lo studio di fattibilità CER. Portale: <strong>dl.camcom.it</strong>.</td>
                 </tr>
               </tbody>
             </table>
@@ -1241,7 +1288,7 @@
     </div>
 
     <div class="source-line">
-      Fonti puntuali: D.M. 07/08/2025 (D.M. 224/2025, CT 3.0, in vigore 25/12/2025) — D.Lgs. 190/2024 (Testo Unico FER) — Legge 4/2026 — L. 207/2024 (Legge di Bilancio, aliquote detrazioni 2026) — art. 16-bis TUIR — D.M. FER X / FER X transitorio — D.D. MASE n.44 del 20/04/2026 e n.64 del 11/11/2025 (FER 2, nuova finestra 08/06/2026–07/08/2026) — delibera ARERA 78/2025 (chiusura SSP) — D.M. MASE 2025 (PNRR CER &lt; 50.000 ab.) — DL PNRR 2026 (eliminato vincolo fine lavori CER 30/06/2026) — MIMIT tavolo 01/04/2026 (ripristino fondi T5.0 esodati, nuovo Iperammortamento 2026) — D.M. MIMIT 04/05/2026 (decreto attuativo Iperammortamento 2026) — piattaforma GSE prenotazione Iperammortamento operativa dal 12/06/2026 (~10 mld €, investimenti fino al 30/09/2028) — DL 38/2026 (eliminato vincolo Made-in-EU per Iperammortamento) — D.Lgs. 5/2026 (nuovi requisiti tecnici PDC CT 3.0 dal 03/06/2026) — DGR Veneto 557/2025 (max spesa Az. 2.1.2 elevato a 1.000.000 €, procedura valutativa) — Bando MASE 262 M€ autoproduzione FV Sud (proroga al 03/07/2026, contributo fino al 63%) — Decreto FER X definitivo MASE (37,15 GW; 10 GW riservati ≤1 MW; prezzi 2026 ~80-90 €/MWh; manifestazioni d'interesse fine estate 2026) — DL PNRR 2026 (accordi CER 30/06/2026 con possibile proroga +60 gg) — CCIAA Treviso-Belluno, Bando doppia transizione digitale ed ecologica 2026 (domande 08/07/2026 → 23/10/2026, fondo perduto 50%, max 40.000 €/impresa, piattaforma Restart) — CCIAA Ferrara-Ravenna, Bando doppia transizione 2026 (dotazione 400.000 €, domande dalle ore 10:00 del 21/07/2026 alle ore 12:00 del 25/09/2026, fondo perduto 50%, max 5.000 €/impresa; ammesse autoproduzione FER e partecipazione a CER) — CCIAA dell'Emilia, Bando Efficienza Energetica 2026 «BE26» (dotazione 1.500.000 €, domande ore 11:00 del 20/07/2026 → ore 16:00 del 30/07/2026, fondo perduto 50%, max 20.000 €/impresa, spese 01/03/2026–30/04/2027, piattaforma Restart) — CCIAA Reggio Calabria, Bando efficientamento energetico e/o idrico 2026 (dotazione 45.000 €, Restart 01–03/09/2026, PEC fino al 30/09/2026) — Terna/ARERA, asta MACSE anno di consegna 2029 fissata al 24/11/2026 (fabbisogno 16 GWh) — portale GSE / Agenzia delle Entrate. <b>Verifica fonti: 12/07/2026.</b><br><br>
+      Fonti puntuali: D.M. 07/08/2025 (D.M. 224/2025, CT 3.0, in vigore 25/12/2025) — D.Lgs. 190/2024 (Testo Unico FER) — Legge 4/2026 — L. 207/2024 (Legge di Bilancio, aliquote detrazioni 2026) — art. 16-bis TUIR — D.M. FER X / FER X transitorio — D.D. MASE n.44 del 20/04/2026 e n.64 del 11/11/2025 (FER 2, nuova finestra 08/06/2026–07/08/2026) — delibera ARERA 78/2025 (chiusura SSP) — D.M. MASE 2025 (PNRR CER &lt; 50.000 ab.) — DL PNRR 2026 (eliminato vincolo fine lavori CER 30/06/2026) — MIMIT tavolo 01/04/2026 (ripristino fondi T5.0 esodati, nuovo Iperammortamento 2026) — D.M. MIMIT 04/05/2026 (decreto attuativo Iperammortamento 2026) — piattaforma GSE prenotazione Iperammortamento operativa dal 12/06/2026 (~10 mld €, investimenti fino al 30/09/2028) — DL 38/2026 (eliminato vincolo Made-in-EU per Iperammortamento) — D.Lgs. 5/2026 (nuovi requisiti tecnici PDC CT 3.0 dal 03/06/2026) — DGR Veneto 557/2025 (max spesa Az. 2.1.2 elevato a 1.000.000 €, procedura valutativa) — Bando MASE 262 M€ autoproduzione FV Sud (proroga al 03/07/2026, contributo fino al 63%) — Decreto FER X definitivo MASE (37,15 GW; 10 GW riservati ≤1 MW; prezzi 2026 ~80-90 €/MWh; manifestazioni d'interesse fine estate 2026) — DL PNRR 2026 (accordi CER 30/06/2026 con possibile proroga +60 gg) — CCIAA Treviso-Belluno, Bando doppia transizione digitale ed ecologica 2026 (domande 08/07/2026 → 23/10/2026, fondo perduto 50%, max 40.000 €/impresa, piattaforma Restart) — CCIAA Ferrara-Ravenna, Bando doppia transizione 2026 (dotazione 400.000 €, domande dalle ore 10:00 del 21/07/2026 alle ore 12:00 del 25/09/2026, fondo perduto 50%, max 5.000 €/impresa; ammesse autoproduzione FER e partecipazione a CER) — CCIAA dell'Emilia, Bando Efficienza Energetica 2026 «BE26» (dotazione 1.500.000 €, domande ore 11:00 del 20/07/2026 → ore 16:00 del 30/07/2026, fondo perduto 50%, max 20.000 €/impresa, spese 01/03/2026–30/04/2027, piattaforma Restart) — CCIAA Reggio Calabria, Bando efficientamento energetico e/o idrico 2026 (dotazione 45.000 €, Restart 01–03/09/2026, PEC fino al 30/09/2026) — Terna/ARERA, asta MACSE anno di consegna 2029 fissata al 24/11/2026 (fabbisogno 16 GWh) — portale GSE / Agenzia delle Entrate. <b>Verifica fonti: 13/07/2026.</b><br><br>
       <strong>Verifica aggiornata all'11 luglio 2026 (agg. cogenerazione, idrogeno e vista per regione), salvo esaurimento fondi e aggiornamenti dei portali istituzionali (GSE, MIMIT, Agenzia delle Entrate, Regione Veneto, Regione Emilia-Romagna, Regione Calabria).</strong> I valori e le scadenze indicati hanno finalità informativa e non sostituiscono la consulenza tecnica e fiscale puntuale.
     </div>
   </div><!-- /view-tipologia -->
@@ -1818,7 +1865,7 @@
     </div>
 
     <div class="source-line">
-      Fonti puntuali: D.M. 07/08/2025 (D.M. 224/2025, CT 3.0) — D.Lgs. 190/2024 — Legge 4/2026 — L. 207/2024 (aliquote detrazioni 2026) — art. 16-bis TUIR — FER X / FER 2 — delibera ARERA 78/2025 (SSP) — D.M. MASE 2025 (PNRR CER &lt; 50.000 ab.) — Transizione 5.0 (MIMIT) — L.R. Veneto 16/2022 e 17/2022 — PR Veneto FESR 2021–2027 — DGR Veneto 557/2025 (Az. 2.1.2 max 1.000.000 €, procedura valutativa) — Bando CER ER 2026 (SFINGE 2020) — Fondo Energia ER 2026 — FEERI Calabria (Fincalabra) — Bando MASE 262 M€ regioni meno sviluppate (proroga 03/07/2026, contributo 63%) — CCIAA Treviso-Belluno, Bando doppia transizione 2026 (08/07 → 23/10/2026) — CCIAA Ferrara-Ravenna, Bando doppia transizione 2026 (21/07 → 25/09/2026) — CCIAA dell'Emilia, Bando Efficienza Energetica 2026 BE26 (20/07 → 30/07/2026) — CCIAA Reggio Calabria, Bando efficientamento energetico e/o idrico 2026 (PEC fino al 30/09/2026) — GSE / Agenzia delle Entrate / Regioni Veneto, Emilia-Romagna, Calabria. <b>Verifica fonti: 12/07/2026.</b><br><br>
+      Fonti puntuali: D.M. 07/08/2025 (D.M. 224/2025, CT 3.0) — D.Lgs. 190/2024 — Legge 4/2026 — L. 207/2024 (aliquote detrazioni 2026) — art. 16-bis TUIR — FER X / FER 2 — delibera ARERA 78/2025 (SSP) — D.M. MASE 2025 (PNRR CER &lt; 50.000 ab.) — Transizione 5.0 (MIMIT) — L.R. Veneto 16/2022 e 17/2022 — PR Veneto FESR 2021–2027 — DGR Veneto 557/2025 (Az. 2.1.2 max 1.000.000 €, procedura valutativa) — Bando CER ER 2026 (SFINGE 2020) — Fondo Energia ER 2026 — FEERI Calabria (Fincalabra) — Bando MASE 262 M€ regioni meno sviluppate (proroga 03/07/2026, contributo 63%) — CCIAA Treviso-Belluno, Bando doppia transizione 2026 (08/07 → 23/10/2026) — CCIAA Ferrara-Ravenna, Bando doppia transizione 2026 (21/07 → 25/09/2026) — CCIAA dell'Emilia, Bando Efficienza Energetica 2026 BE26 (20/07 → 30/07/2026) — CCIAA Reggio Calabria, Bando efficientamento energetico e/o idrico 2026 (PEC fino al 30/09/2026) — CCIAA Venezia Rovigo, Bando Voucher Doppia Transizione 2026 cod. 2601 (click day 27/07/2026, 476.000 €) — D.M. FER X definitivo firmato MASE 18/06/2026 (37,15 GW; regole operative GSE attese entro 60 gg) — GSE / Agenzia delle Entrate / Regioni Veneto, Emilia-Romagna, Calabria. <b>Verifica fonti: 13/07/2026.</b><br><br>
       <strong>Verifica aggiornata all'11 luglio 2026 (agg. cogenerazione, idrogeno e vista per regione), salvo esaurimento fondi e aggiornamenti dei portali istituzionali (GSE, MIMIT, Regione Veneto, Regione Emilia-Romagna, Regione Calabria).</strong> Le informazioni hanno finalità orientativa e non sostituiscono la consulenza tecnica e fiscale.
     </div>
   </div><!-- /view-percorso -->
@@ -2103,7 +2150,7 @@
     </div>
   </div>
   <div class="footer-bottom">
-    © 2026 Rete 21 · Tutti i diritti riservati · Tool Incentivi Percorsi v10 — 11/07/2026
+    © 2026 Rete 21 · Tutti i diritti riservati · Tool Incentivi Percorsi v12 — 13/07/2026
   </div>
 </footer>
 
@@ -2153,8 +2200,8 @@
     valledaosta:{n:"Valle d'Aosta",portale:"Finaosta — regione.vda.it",misure:[]},
     veneto:{n:"Veneto",socie:true,portale:"Fondi.RVE — fondi.regione.veneto.it · Veneto Innovazione",misure:[
       {t:"Fondo Veneto Energia — Imprese (Az. 2.1.2)",d:"Fondo perduto <b>fino al 20%</b> + finanziamento <b>50% a tasso zero</b>. Investimento 100.000–<b>1.000.000 €</b> (DGR 557/2025). Riduzione consumi ≥ 30% obbligatoria. Procedura <b>valutativa</b>. Dotazione 31 M€.",b:"PMI venete",s:"Valutativa",cls:"scad-continuo",st:"Attiva",stc:"stato-attivo",a:"Verificare dotazione residua su <b>Veneto Innovazione</b>."},
-      {t:"CCIAA Treviso-Belluno — Bando doppia transizione",d:"Fondo perduto <b>50%</b>, max <b>40.000 €</b>/impresa (beni/software + consulenze 4.0 + efficienza energetica). Ammesse spese dal 01/01/2026.",b:"MPMI TV-BL",s:"08/07/2026 → 23/10/2026",cls:"scad-breve",st:"APERTO",stc:"stato-attivo",a:"<b>Sportello aperto.</b> Presentare su <b>tb.camcom.gov.it</b> — a sportello, fino a esaurimento."},
-      {t:"CCIAA Venezia Rovigo — Voucher doppia transizione",d:"Nuovo voucher per innovazione tecnologica ed <b>efficienza energetica</b>. Fondo perduto <b>fino al 70%</b>.",b:"MPMI VE-RO",s:"In pubblicazione",cls:"scad-att",st:"Da verificare",stc:"stato-att",a:"Monitorare il portale <b>CCIAA Venezia Rovigo</b>; predisporre preventivi."},
+      {t:"CCIAA Treviso-Belluno — Bando doppia transizione",d:"Fondo perduto <b>50%</b>, max <b>40.000 €</b>/impresa (beni/software + consulenze 4.0 + efficienza energetica). Ammesse spese dal 01/01/2026.",b:"MPMI TV-BL",s:"Aperto → 23/10/2026",cls:"scad-breve",st:"Aperto",stc:"stato-attivo",a:"<b>Sportello aperto dall'08/07/2026</b> (dotazione 1,4 M€). Presentare su <b>Restart / tb.camcom.gov.it</b> — ordine cronologico, chiusura 23/10/2026."},
+      {t:"CCIAA Venezia Rovigo — Voucher Doppia Transizione 2026",d:"Voucher (cod. 2601) per digitalizzazione e <b>sostenibilità energetica</b>: monitoraggio consumi, ESG, <b>Energy Manager</b>, <b>studi di fattibilità CER</b>. Fondo perduto <b>70%</b>, max <b>6.000 €</b> (invest. min. 5.000 €). Dotazione <b>476.000 €</b>.",b:"MPMI VE-RO",s:"Apre 27/07/2026",cls:"scad-breve",st:"Nuovo — in apertura",stc:"stato-nuovo",a:"<b>Click day 27/07/2026 ore 10:00</b>, ordine cronologico. <b>Precaricare subito</b> la pratica su Restart (aperto dall'08/07). Portale: <b>dl.camcom.it</b>."},
       {t:"L.R. 16/2022 (CER) e L.R. 17/2022 (FV a terra)",d:"Quadro normativo regionale: promozione CER e autoconsumo collettivo; disciplina FV a terra in raccordo con il D.Lgs. 190/2024.",b:"CER · Imprese",s:"Quadro normativo",cls:"scad-ampia",st:"Vigente",stc:"stato-conf",a:"Riferimento per le configurazioni CER e per le verifiche urbanistiche/aree idonee."},
       {t:"PR Veneto FESR — Bando CER (Az. 2.2.1)",d:"Bando CER (DGR 758/2025), 6 M€, fino al 40% / 300k€.",b:"CER",s:"Scaduto 05/02/2026",cls:"scad-urgente",st:"Scaduto",stc:"stato-scad",a:"Attendere riaperture sul sistema <b>Fondi.RVE</b>."}
     ]}
@@ -2261,10 +2308,119 @@
     if (!anySelected) empty.classList.remove('show');
   }
 
+  /* =========================================================
+     EVIDENZA AGGIORNAMENTO AUTOMATICO (legge update.json)
+     ========================================================= */
+  /* "Nessuna novità" solo se il report e' la frase secca prevista dal workflow,
+     non se contiene un paragrafo intitolato "nessuna variazione per..." */
+  function senzaNovita(t) {
+    return t.length < 220 && /nessun[ao] (variazione|aggiornamento)|non ci sono variazioni/i.test(t);
+  }
+
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  }
+
+  /* Mini-renderer Markdown: titoli, liste, tabelle, grassetto, link. Input sempre escapato prima. */
+  function mdToHtml(md) {
+    const lines = esc(md).split('\n');
+    let html = '', inList = false, inTable = false;
+
+    const inline = t => t
+      .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
+      .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+      .replace(/(^|[\s(])\*([^*\n]+)\*/g, '$1<em>$2</em>')
+      .replace(/`([^`]+)`/g, '<code>$1</code>');
+
+    const closeBlocks = () => {
+      if (inList) { html += '</ul>'; inList = false; }
+      if (inTable) { html += '</table>'; inTable = false; }
+    };
+
+    for (let raw of lines) {
+      const line = raw.trim();
+      if (!line) { closeBlocks(); continue; }
+
+      if (/^-{3,}$/.test(line) || /^={3,}$/.test(line)) { closeBlocks(); html += '<hr>'; continue; }
+
+      const h = line.match(/^(#{1,6})\s+(.*)$/);
+      if (h) { closeBlocks(); html += '<h3>' + inline(h[2]) + '</h3>'; continue; }
+
+      if (line.startsWith('|') && line.endsWith('|')) {
+        const cells = line.slice(1, -1).split('|').map(c => c.trim());
+        if (cells.every(c => /^:?-{2,}:?$/.test(c))) continue; // riga separatrice
+        if (!inTable) { closeBlocks(); html += '<table>'; inTable = true; }
+        const tag = html.endsWith('<table>') ? 'th' : 'td';
+        html += '<tr>' + cells.map(c => '<' + tag + '>' + inline(c) + '</' + tag + '>').join('') + '</tr>';
+        continue;
+      }
+      if (inTable) { html += '</table>'; inTable = false; }
+
+      const li = line.match(/^(?:[-*+]|\d+\.)\s+(.*)$/);
+      if (li) {
+        if (!inList) { html += '<ul>'; inList = true; }
+        html += '<li>' + inline(li[1]) + '</li>';
+        continue;
+      }
+      if (inList) { html += '</ul>'; inList = false; }
+
+      if (line.startsWith('&gt;')) { html += '<p><em>' + inline(line.replace(/^&gt;\s*/, '')) + '</em></p>'; continue; }
+      html += '<p>' + inline(line) + '</p>';
+    }
+    closeBlocks();
+    return html;
+  }
+
+  function initUpdateBox() {
+    const box = document.getElementById('update-box');
+    if (!box) return;
+
+    fetch('update.json?ts=' + Date.now(), { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status)))
+      .then(d => {
+        const testo = (d.testo || '').trim();
+        const quando = new Date(d.timestamp || d.data);
+        const dataIt = isNaN(quando)
+          ? (d.data || '—')
+          : quando.toLocaleString('it-IT', { day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+        const novita = testo && !senzaNovita(testo);
+
+        box.hidden = false;
+        box.classList.toggle('has-news', !!novita);
+        document.getElementById('update-title').textContent = novita
+          ? 'Possibili variazioni normative da verificare'
+          : 'Nessuna variazione normativa rilevata';
+        document.getElementById('update-sub').textContent = 'Ultima verifica automatica: ' + dataIt;
+
+        const badge = document.getElementById('badge-verifica');
+        if (badge) {
+          badge.hidden = false;
+          badge.textContent = '✔ Verificato il ' + (isNaN(quando) ? (d.data || '—')
+            : quando.toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit', year: 'numeric' }));
+        }
+
+        const body = document.getElementById('update-body');
+        const toggle = document.getElementById('update-toggle');
+        if (!testo) { toggle.hidden = true; return; }
+
+        body.innerHTML = mdToHtml(testo);
+        toggle.addEventListener('click', () => {
+          const aperto = !body.hidden;
+          body.hidden = aperto;
+          toggle.setAttribute('aria-expanded', String(!aperto));
+          toggle.textContent = aperto ? 'Mostra dettagli ▾' : 'Nascondi dettagli ▴';
+        });
+        if (novita) toggle.click(); // se ci sono novità, apri subito
+      })
+      .catch(() => { /* update.json assente o non leggibile: nessun banner */ });
+  }
+
   /* ---- INIT ---- */
   document.addEventListener('DOMContentLoaded', function () {
     initRegioni();
     setView('tipologia');
+    initUpdateBox();
   });
 </script>
 </body>
